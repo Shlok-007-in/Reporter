@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In - Shutdown Watch</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .auth-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .auth-box {
+      max-width: 420px;
+      width: 100%;
+      padding: 40px 32px;
+    }
+
+    .auth-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .auth-logo {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 16px;
+    }
+
+    .auth-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .auth-subtitle {
+      font-size: 0.95rem;
+      opacity: 0.8;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.3);
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    .auth-btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #5AC8FA, #007AFF);
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 12px;
+    }
+
+    .auth-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(90, 200, 250, 0.4);
+    }
+
+    .auth-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .auth-divider {
+      text-align: center;
+      margin: 24px 0;
+      position: relative;
+    }
+
+    .auth-divider::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .auth-divider span {
+      background: var(--frost);
+      padding: 0 12px;
+      position: relative;
+      font-size: 0.85rem;
+      opacity: 0.7;
+    }
+
+    .guest-btn {
+      background: transparent;
+      border: 2px dashed var(--border);
+      color: var(--text);
+    }
+
+    .guest-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      border-style: solid;
+    }
+
+    .toggle-auth {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.9rem;
+    }
+
+    .toggle-auth a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .toggle-auth a:hover {
+      text-decoration: underline;
+    }
+
+    .error-message {
+      background: rgba(255, 59, 48, 0.1);
+      border: 1px solid rgba(255, 59, 48, 0.3);
+      color: #ff3b30;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    .success-message {
+      background: rgba(52, 199, 89, 0.1);
+      border: 1px solid rgba(52, 199, 89, 0.3);
+      color: #34c759;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="auth-container">
+    <div class="glass-panel auth-box">
+      <div class="auth-header">
+        <img class="auth-logo" src="https://cdn-icons-png.flaticon.com/512/684/684908.png" alt="Logo" />
+        <h1 class="auth-title">Reporter</h1>
+        <p class="auth-subtitle">Report and track internet connectivity</p>
+      </div>
+
+      <div id="error-message" class="error-message"></div>
+      <div id="success-message" class="success-message"></div>
+
+      <!-- Sign In Form -->
+      <form id="signin-form">
+        <div class="form-group">
+          <label for="signin-email">Email</label>
+          <input type="email" id="signin-email" class="form-input" placeholder="your@email.com" required />
+        </div>
+        <div class="form-group">
+          <label for="signin-password">Password</label>
+          <input type="password" id="signin-password" class="form-input" placeholder="••••••••" required />
+        </div>
+        <button type="submit" class="auth-btn" id="signin-btn">Sign In</button>
+      </form>
+
+      <!-- Sign Up Form (Hidden) -->
+      <form id="signup-form" class="hidden">
+        <div class="form-group">
+          <label for="signup-name">Name</label>
+          <input type="text" id="signup-name" class="form-input" placeholder="Your name" required />
+        </div>
+        <div class="form-group">
+          <label for="signup-email">Email</label>
+          <input type="email" id="signup-email" class="form-input" placeholder="your@email.com" required />
+        </div>
+        <div class="form-group">
+          <label for="signup-password">Password</label>
+          <input type="password" id="signup-password" class="form-input" placeholder="••••••••" minlength="6" required />
+        </div>
+        <button type="submit" class="auth-btn" id="signup-btn">Sign Up</button>
+      </form>
+
+      
+      <div class="toggle-auth">
+        <span id="toggle-text">Don't have an account? </span>
+        <a href="#" id="toggle-link">Sign Up</a>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInAnonymously, updateProfile } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyC4QI3GXeapuGuT-5m3cYSxrmSWD1Inhig",
+      authDomain: "reporter-6b298.firebaseapp.com",
+      databaseURL: "https://reporter-6b298-default-rtdb.firebaseio.com",
+      projectId: "reporter-6b298",
+      storageBucket: "reporter-6b298.firebasestorage.app",
+      messagingSenderId: "812204101681",
+      appId: "1:812204101681:web:87231c8b45da8f97820510",
+      measurementId: "G-38P5SBQDWN"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Elements
+    const signinForm = document.getElementById('signin-form');
+    const signupForm = document.getElementById('signup-form');
+    const toggleLink = document.getElementById('toggle-link');
+    const toggleText = document.getElementById('toggle-text');
+    const guestBtn = document.getElementById('guest-btn');
+    const errorMessage = document.getElementById('error-message');
+    const successMessage = document.getElementById('success-message');
+    const signinBtn = document.getElementById('signin-btn');
+    const signupBtn = document.getElementById('signup-btn');
+
+    let isSignInMode = true;
+
+    // Show error
+    function showError(message) {
+      errorMessage.textContent = message;
+      errorMessage.style.display = 'block';
+      successMessage.style.display = 'none';
+      setTimeout(() => {
+        errorMessage.style.display = 'none';
+      }, 5000);
+    }
+
+    // Show success
+    function showSuccess(message) {
+      successMessage.textContent = message;
+      successMessage.style.display = 'block';
+      errorMessage.style.display = 'none';
+    }
+
+    // Redirect to main app
+    function redirectToApp() {
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 1000);
+    }
+
+    // Toggle between sign in and sign up
+    toggleLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      isSignInMode = !isSignInMode;
+      
+      if (isSignInMode) {
+        signinForm.classList.remove('hidden');
+        signupForm.classList.add('hidden');
+        toggleText.textContent = "Don't have an account? ";
+        toggleLink.textContent = "Sign Up";
+      } else {
+        signinForm.classList.add('hidden');
+        signupForm.classList.remove('hidden');
+        toggleText.textContent = "Already have an account? ";
+        toggleLink.textContent = "Sign In";
+      }
+      
+      errorMessage.style.display = 'none';
+      successMessage.style.display = 'none';
+    });
+
+    // Sign In
+    signinForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      signinBtn.disabled = true;
+      signinBtn.textContent = 'Signing in...';
+      
+      const email = document.getElementById('signin-email').value;
+      const password = document.getElementById('signin-password').value;
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        showSuccess('✅ Signed in successfully!');
+        redirectToApp();
+      } catch (error) {
+        console.error(error);
+        if (error.code === 'auth/user-not-found') {
+          showError('No account found with this email.');
+        } else if (error.code === 'auth/wrong-password') {
+          showError('Incorrect password.');
+        } else if (error.code === 'auth/invalid-email') {
+          showError('Invalid email address.');
+        } else {
+          showError('Failed to sign in. Please try again.');
+        }
+        signinBtn.disabled = false;
+        signinBtn.textContent = 'Sign In';
+      }
+    });
+
+    // Sign Up
+    signupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      signupBtn.disabled = true;
+      signupBtn.textContent = 'Creating account...';
+      
+      const name = document.getElementById('signup-name').value;
+      const email = document.getElementById('signup-email').value;
+      const password = document.getElementById('signup-password').value;
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        await updateProfile(userCredential.user, { displayName: name });
+        showSuccess('✅ Account created successfully!');
+        redirectToApp();
+      } catch (error) {
+        console.error(error);
+        if (error.code === 'auth/email-already-in-use') {
+          showError('Email already in use. Please sign in instead.');
+        } else if (error.code === 'auth/weak-password') {
+          showError('Password should be at least 6 characters.');
+        } else if (error.code === 'auth/invalid-email') {
+          showError('Invalid email address.');
+        } else {
+          showError('Failed to create account. Please try again.');
+        }
+        signupBtn.disabled = false;
+        signupBtn.textContent = 'Sign Up';
+      }
+    });
+
+    
+    // Check if user is already logged in
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        redirectToApp();
+      }
+    });
+  </script>
+
+</body>
+</html>
+

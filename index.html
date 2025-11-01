@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shutdown Watch</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    .logout-btn {
+      background: rgba(255, 59, 48, 0.15);
+      border: 1px solid rgba(255, 59, 48, 0.3);
+      color: #ff3b30;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    .logout-btn:hover {
+      background: rgba(255, 59, 48, 0.25);
+      transform: translateY(-1px);
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <main class="app-container">
+
+    <!-- Header Panel -->
+    <section class="glass-panel header-panel">
+      <div class="header-left">
+        <img class="logo" src="https://cdn-icons-png.flaticon.com/512/684/684908.png" alt="Shutdown Watch logo" />
+        <div class="title-block">
+          <h1 class="app-title">Reporter</h1>
+          <p class="app-sub">Real-time Internet Status</p>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="running-text">
+          <b>Help improve your area — click on the map to report slow or down connections!</b>
+        </div>
+        <button class="logout-btn" id="logout-btn">Logout</button>
+      </div>
+    </section>
+
+    <!-- Live Overview Panel -->
+    <section class="glass-panel stats-panel">
+      <div class="panel-header">
+        <h2>Live Overview</h2>
+        <p>Reports in the last 24h</p>
+      </div>
+      <div class="stats-body">
+        <div class="stat-row"><span>Normal</span><span id="stat-normal">0</span></div>
+        <div class="stat-row"><span>Slow</span><span id="stat-slow">0</span></div>
+        <div class="stat-row"><span>Down</span><span id="stat-down">0</span></div>
+        <div class="stat-footer">Last update <span id="stat-updated">—</span></div>
+      </div>
+    </section>
+
+    <!-- Report Internet Status Panel -->
+    <section class="glass-panel report-panel">
+      <div class="panel-header">
+        <h2>Report Internet Status</h2>
+      </div>
+
+      <div class="input-group">
+        <h3>1. Select ISP</h3>
+        <div class="button-row">
+          <label><input type="radio" name="isp-type" value="Jio">Jio</label>
+          <label><input type="radio" name="isp-type" value="Airtel">Airtel</label>
+          <label><input type="radio" name="isp-type" value="Vi">Vi</label>
+          <label><input type="radio" name="isp-type" value="BSNL">BSNL</label>
+          <label><input type="radio" name="isp-type" value="MTNL">MTNL</label>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <h3>2. Select Network Type</h3>
+        <div class="button-row">
+          <label><input type="radio" name="network-type" value="2G">2G</label>
+          <label><input type="radio" name="network-type" value="3G">3G</label>
+          <label><input type="radio" name="network-type" value="4G">4G</label>
+          <label><input type="radio" name="network-type" value="5G">5G</label>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <h3>3. Click Map → Select Status</h3>
+        <div class="button-row">
+          <button id="btn-normal" class="glass-btn">Normal</button>
+          <button id="btn-slow" class="glass-btn">Slow</button>
+          <button id="btn-down" class="glass-btn">Down</button>
+        </div>
+        <div class="button-row">
+          <button id="btn-reset" class="glass-btn ghost">Reset Report</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Map -->
+    <section class="map-panel glass-panel">
+      <div id="map"></div>
+    </section>
+
+  </main>
+
+  <footer class="footer glass-panel">
+    © 2025 A shlok avatade production | Report Connectivity Issues Near You
+  </footer>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
