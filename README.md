@@ -23,13 +23,14 @@ Verify Problems: Know immediately if it’s just your area or a widespread issue
 The result is a transparent, community-powered view of India’s network reliability.
 
 💻 Tech Stack
-Technology	     Purpose
-Frontend	       HTML5, CSS3 (Glassmorphism UI), JavaScript (ES6+)
-Mapping	         Leaflet.js + OpenStreetMap
-Backend	         Firebase Realtime Database (for live data sync)
-Authentication	 Firebase Authentication (Email/Password)
-Hosting          Firebase Hosting / Vercel
-Design	         Responsive, Mobile-first, Glassmorphism aesthetic
+
+Reporter is built using a modern, lightweight web architecture designed for real-time interaction and smooth performance across all devices. The project emphasizes minimalism, transparency, and speed while maintaining a refined glassmorphism design aesthetic.
+Frontend: Built with HTML5, CSS3, and JavaScript (ES6+). The interface follows a glassmorphism style, optimized for responsiveness and mobile-first usability.
+Mapping: Uses Leaflet.js integrated with OpenStreetMap for live, interactive visualization of user reports
+Backend: Powered by Firebase Realtime Database to ensure instant, two-way data synchronization between all connected users.
+Authentication: Managed through Firebase Authentication using email and password for secure login and access control.
+Hosting: Deployed on  Vercel for reliable uptime and fast content delivery.
+Design: Focused on a clean, minimal layout with a soft glass effect that enhances readability and modern appeal.
 
 ***Around 30–35% of the frontend logic and CSS layout was assisted by AI.
 All core logic, concept, design direction, and implementation were developed independently by me.***
