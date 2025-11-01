@@ -17,6 +17,7 @@ View Live Reports: Instantly see reports on an interactive map:
 🟠 Slow
 
 🔴 Down
+
 Track Outage Patterns: Identify which regions and networks face recurring issues.
 Verify Problems: Know immediately if it’s just your area or a widespread issue.
 The result is a transparent, community-powered view of India’s network reliability.
